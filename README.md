@@ -1,6 +1,6 @@
-# sistema de entrenamiento cognitivo adaptativo
+# Sistema de entrenamiento cognitivo adaptativo
 
-## objetivo
+## Objetivo
 Diseñar un sistema de entrenamiento cognitivo adaptativo basado en modelos de dificultad dinámica y seguimiento del rendimiento del usuario.
 
 ## estructura del proyecto
