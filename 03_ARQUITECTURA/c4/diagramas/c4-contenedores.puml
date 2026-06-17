@@ -1,0 +1,25 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Sistema de Entrenamiento Cognitivo Adaptativo - Diagrama de Contenedores
+
+Person(usuario, "Usuario Final", "Realiza sesiones de entrenamiento y consulta su progreso")
+Person(admin, "Administrador del Sistema", "Gestiona usuarios y parámetros globales")
+
+System_Boundary(s1, "Sistema de Entrenamiento Cognitivo Adaptativo") {
+
+    Container(api, "API REST", "FastAPI", "Expone los casos de uso mediante endpoints HTTP")
+    Container(app, "Aplicación", "Python", "Orquesta los procesos y coordina los casos de uso")
+    Container(domain, "Dominio", "Python", "Contiene entidades y reglas de negocio")
+    ContainerDb(db, "Base de Datos", "SQLite", "Persistencia de usuarios, sesiones, eventos y métricas")
+}
+
+Rel(usuario, api, "Utiliza", "HTTP/JSON")
+Rel(admin, api, "Administra", "HTTP/JSON")
+
+Rel(api, app, "Invoca")
+Rel(app, domain, "Ejecuta reglas de negocio")
+Rel(domain, db, "Lee y escribe")
+
+@enduml
