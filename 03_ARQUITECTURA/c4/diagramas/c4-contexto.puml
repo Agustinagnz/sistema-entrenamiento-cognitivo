@@ -1,0 +1,17 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Sistema de Entrenamiento Cognitivo Adaptativo - Diagrama de Contexto
+
+Person(usuario, "Usuario Final", "Realiza sesiones de entrenamiento cognitivo y consulta su progreso")
+
+Person(admin, "Administrador del Sistema", "Gestiona usuarios y parámetros globales")
+
+System(sistema, "Sistema de Entrenamiento Cognitivo Adaptativo", "Plataforma que genera ejercicios, evalúa respuestas y adapta dinámicamente la dificultad")
+
+Rel(usuario, sistema, "Realiza sesiones de entrenamiento")
+
+Rel(admin, sistema, "Administra y configura")
+
+@enduml
