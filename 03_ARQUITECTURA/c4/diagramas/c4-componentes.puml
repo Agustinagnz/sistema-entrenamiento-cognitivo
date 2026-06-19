@@ -1,0 +1,46 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Sistema de Entrenamiento Cognitivo Adaptativo - Diagrama de Componentes
+
+Container(api, "API REST", "FastAPI", "Expone los casos de uso mediante HTTP")
+
+Component(controladores, "Controladores", "FastAPI", "Reciben solicitudes y validan datos")
+
+Component(servicio_sesion, "Servicio de Sesión", "Caso de Uso", "Gestiona el ciclo de vida de las sesiones")
+Component(servicio_generacion, "Servicio de Generación de Ejercicios", "Caso de Uso", "Coordina la generación de ejercicios")
+Component(servicio_respuesta, "Servicio de Evaluación de Respuestas", "Caso de Uso", "Evalúa respuestas")
+Component(servicio_metricas, "Servicio de Cálculo de Métricas", "Caso de Uso", "Calcula métricas")
+Component(servicio_adaptacion, "Servicio de Adaptación", "Caso de Uso", "Ajusta la dificultad")
+Component(servicio_progreso, "Servicio de Progreso del Usuario", "Caso de Uso", "Actualiza el perfil cognitivo")
+Component(servicio_eventos, "Servicio de Registro de Eventos", "Caso de Uso", "Registra eventos")
+
+Component(motor_adaptacion, "Motor de Adaptación", "Servicio de Dominio", "Decide cambios de dificultad")
+Component(generador_ejercicios, "Generador de Ejercicios", "Servicio de Dominio", "Genera ejercicios")
+Component(evaluador_respuestas, "Evaluador de Respuestas", "Servicio de Dominio", "Valida respuestas")
+
+Component(repositorio_usuarios, "Repositorio de Usuarios", "Puerto de salida", "Persistencia de usuarios")
+Component(repositorio_perfiles, "Repositorio de Perfiles Cognitivos", "Puerto de salida", "Persistencia del perfil cognitivo")
+Component(repositorio_sesiones, "Repositorio de Sesiones", "Puerto de salida", "Persistencia de sesiones")
+Component(repositorio_ejercicios, "Repositorio de Ejercicios", "Puerto de salida", "Persistencia de ejercicios")
+Component(repositorio_eventos, "Repositorio de Eventos", "Puerto de salida", "Persistencia de eventos")
+
+Rel(controladores, servicio_sesion, "Invoca")
+
+Rel(servicio_sesion, servicio_generacion, "Coordina")
+Rel(servicio_sesion, servicio_respuesta, "Coordina")
+Rel(servicio_respuesta, servicio_metricas, "Genera métricas")
+Rel(servicio_metricas, servicio_adaptacion, "Proporciona métricas")
+
+Rel(servicio_adaptacion, motor_adaptacion, "Utiliza")
+Rel(servicio_generacion, generador_ejercicios, "Utiliza")
+Rel(servicio_respuesta, evaluador_respuestas, "Utiliza")
+
+Rel(servicio_sesion, repositorio_sesiones, "Persiste")
+Rel(servicio_progreso, repositorio_perfiles, "Actualiza")
+Rel(servicio_progreso, repositorio_usuarios, "Consulta")
+Rel(servicio_eventos, repositorio_eventos, "Registra")
+Rel(servicio_generacion, repositorio_ejercicios, "Consulta")
+
+@enduml
