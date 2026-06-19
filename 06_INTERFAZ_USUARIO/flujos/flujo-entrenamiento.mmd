@@ -1,0 +1,24 @@
+sequenceDiagram
+
+participant U as Usuario
+participant UI as Interfaz
+participant S as Sistema
+participant A as Adaptación
+participant E as Evaluador
+
+U->>UI: Iniciar sesión
+UI->>S: StartTrainingSession
+S->>UI: Sesión + ejercicio inicial
+
+loop Sesión activa
+    U->>UI: Responder ejercicio
+    UI->>E: SubmitAnswer
+    E->>S: Resultado evaluación
+    S->>A: Métricas
+    A->>S: Nueva dificultad
+    S->>UI: Nuevo ejercicio
+end
+
+U->>UI: Finalizar sesión
+UI->>S: EndTrainingSession
+S->>UI: Resumen de progreso

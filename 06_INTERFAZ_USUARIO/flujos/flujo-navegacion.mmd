@@ -1,0 +1,16 @@
+flowchart TD
+
+A[Login / Inicio] --> B[Inicio de sesión de entrenamiento]
+
+B --> C[Ejercicio activo]
+C --> D[Evaluación / Feedback]
+D --> C
+
+C --> E[Finalizar sesión]
+E --> F[Progreso del usuario]
+
+F --> B
+
+A --> G[Panel administrador]
+G --> H[Gestión de usuarios]
+G --> I[Configuración del sistema]
