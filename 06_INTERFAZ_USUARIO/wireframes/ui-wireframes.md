@@ -1,4 +1,9 @@
-3.1 Pantalla: Inicio de sesión de entrenamiento
+# Wireframes del Sistema
+
+---
+
+## Pantalla: Inicio de sesión de entrenamiento
+
 +--------------------------------------------------+
 | Sistema de Entrenamiento Cognitivo Adaptativo    |
 +--------------------------------------------------+
@@ -12,7 +17,11 @@ Estado:
 - Última sesión: fecha / resumen
 
 [ Botón: INICIAR ]
-3.2 Pantalla: Ejercicio activo
+
+---
+
+## Pantalla: Ejercicio activo
+
 +--------------------------------------------------+
 | Sesión activa | Dificultad dinámica              |
 +--------------------------------------------------+
@@ -29,7 +38,11 @@ Respuesta:
 
 Tiempo: 00:12
 Precisión estimada: --
-3.3 Pantalla: Feedback inmediato
+
+---
+
+## Pantalla: Feedback inmediato
+
 Resultado:
 -----------------------------------
 ✔ Correcto / Incorrecto
@@ -40,7 +53,11 @@ Métricas:
 - Ajuste de dificultad aplicado
 
 [ Siguiente ejercicio ]
-3.4 Pantalla: Progreso
+
+---
+
+## Pantalla: Progreso del usuario
+
 +--------------------------------------------------+
 | Evolución del usuario                             |
 +--------------------------------------------------+
@@ -49,18 +66,25 @@ Métricas:
 - Lógica:  ▲ +8%
 - Atención: ▼ -3%
 
-Gráfico de evolución (temporal)
+Gráfico de evolución temporal
 
 [ Ver sesiones ]
-3.5 Pantalla: Administración (admin)
+
+---
+
+## Pantalla: Administración (Administrador)
+
 Usuarios:
 
-[ lista de usuarios ]
-
+- lista de usuarios
 - activar / desactivar
 - editar perfil cognitivo
 - ver sesiones
-3.6 Pantalla: Configuración global
+
+---
+
+## Pantalla: Configuración global
+
 Parámetros del sistema:
 
 - sensibilidad de adaptación

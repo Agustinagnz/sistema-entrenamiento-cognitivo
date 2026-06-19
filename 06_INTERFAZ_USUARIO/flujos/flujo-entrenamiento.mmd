@@ -3,12 +3,12 @@ sequenceDiagram
 participant U as Usuario
 participant UI as Interfaz
 participant S as Sistema
-participant A as Adaptación
+participant A as Motor de adaptación
 participant E as Evaluador
 
 U->>UI: Iniciar sesión
 UI->>S: StartTrainingSession
-S->>UI: Sesión + ejercicio inicial
+S->>UI: Sesión + primer ejercicio
 
 loop Sesión activa
     U->>UI: Responder ejercicio
