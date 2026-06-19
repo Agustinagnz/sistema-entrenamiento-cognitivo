@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+
+actor "Usuario final" as Usuario
+actor "Administrador" as Admin
+
+rectangle "Sistema de Entrenamiento Cognitivo Adaptativo" {
+
+  usecase "Iniciar sesión" as CU1
+  usecase "Resolver ejercicio" as CU2
+  usecase "Finalizar sesión" as CU3
+  usecase "Consultar progreso" as CU4
+  usecase "Administrar usuarios" as CU5
+  usecase "Configurar sistema" as CU6
+}
+
+Usuario --> CU1
+Usuario --> CU2
+Usuario --> CU3
+Usuario --> CU4
+
+Admin --> CU5
+Admin --> CU6
+
+@enduml

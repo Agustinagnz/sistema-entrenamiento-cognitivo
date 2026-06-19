@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+
+actor "Usuario final" as Usuario
+
+rectangle "Sistema de Entrenamiento Cognitivo Adaptativo" {
+
+  usecase "Iniciar sesión de entrenamiento" as CU1
+  usecase "Recuperar perfil cognitivo" as UC1
+  usecase "Generar ejercicio inicial" as UC2
+
+  CU1 --> UC1 
+  CU1 --> UC2 
+}
+
+Usuario --> CU1
+
+@enduml

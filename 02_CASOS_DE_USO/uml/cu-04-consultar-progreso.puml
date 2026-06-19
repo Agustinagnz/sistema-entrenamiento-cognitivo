@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+
+actor "Usuario final" as Usuario
+
+rectangle "Sistema de Entrenamiento Cognitivo Adaptativo" {
+
+  usecase "Consultar progreso" as CU4
+  usecase "Recuperar sesiones" as UC1
+  usecase "Calcular métricas históricas" as UC2
+
+  CU4 --> UC1 
+  CU4 --> UC2 
+}
+
+Usuario --> CU4
+
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+left to right direction
+
+actor "Administrador" as Admin
+
+rectangle "Sistema de Entrenamiento Cognitivo Adaptativo" {
+
+  usecase "Administrar usuarios" as CU5
+  usecase "Crear usuario" as UC1
+  usecase "Modificar usuario" as UC2
+  usecase "Desactivar usuario" as UC3
+
+  CU5 --> UC1 
+  CU5 --> UC2 
+  CU5 --> UC3 
+
+Admin --> CU5
+
+@enduml
