@@ -6,158 +6,222 @@ Los casos de uso describen las interacciones principales entre los actores y el 
 
 ---
 
-# CU-01. Iniciar sesión de entrenamiento
+# CU-01 Iniciar sesión de entrenamiento
+
+Objetivo
 
-## Actor principal
+Iniciar una sesión de entrenamiento cognitivo personalizada basada en el perfil del usuario.
 
-Usuario Final
+Actores
 
-## Descripción
+Usuario final
 
-Permite al usuario iniciar una sesión de entrenamiento cognitivo.
+Disparador
 
-## Precondiciones
+El usuario solicita iniciar entrenamiento.
+
+Precondiciones
+Usuario existente y activo
+Perfil cognitivo disponible
+Sistema operativo y sin fallos de infraestructura
+Postcondiciones
+Sesión creada y persistida
+Ejercicio inicial generado
+Evento inicio_sesion registrado
+Flujo principal
+El usuario solicita iniciar sesión.
+El sistema valida existencia y estado del usuario.
+El sistema recupera el perfil cognitivo.
+Se crea una nueva sesión en estado “activa”.
+El motor de generación produce el primer ejercicio parametrizado.
+El ejercicio se asocia a la sesión.
+Se registra el evento de inicio de sesión.
+El sistema devuelve la sesión activa con el ejercicio inicial.
+Flujos alternativos
 
-* El usuario debe existir en el sistema.
+A1. Usuario sin perfil cognitivo
 
-## Flujo principal
+Se crea un perfil inicial con valores base.
+Se continúa en el paso 4.
+Excepciones
 
-1. El usuario solicita iniciar una sesión.
-2. El sistema recupera el perfil cognitivo del usuario.
-3. El sistema inicializa la sesión.
-4. El sistema genera el primer ejercicio.
-5. La sesión queda activa.
+E1. Usuario inactivo o bloqueado
 
-## Postcondiciones
-
-* Existe una sesión activa asociada al usuario.
-
----
-
-# CU-02. Resolver ejercicio
-
-## Actor principal
-
-Usuario Final
-
-## Descripción
-
-Permite al usuario responder un ejercicio generado por el sistema.
-
-## Precondiciones
-
-* Debe existir una sesión activa.
-* Debe existir un ejercicio disponible.
-
-## Flujo principal
-
-1. El sistema presenta el ejercicio.
-2. El usuario envía una respuesta.
-3. El sistema registra el tiempo de respuesta.
-4. El sistema evalúa la respuesta.
-5. El sistema genera métricas de desempeño.
-6. El motor de adaptación determina la dificultad siguiente.
-7. El sistema genera un nuevo ejercicio.
-
-## Postcondiciones
-
-* El desempeño queda registrado.
-* La dificultad puede modificarse.
-
----
-
-# CU-03. Finalizar sesión
-
-## Actor principal
-
-Usuario Final
-
-## Descripción
-
-Permite concluir una sesión de entrenamiento.
-
-## Precondiciones
-
-* Debe existir una sesión activa.
-
-## Flujo principal
-
-1. El usuario solicita finalizar la sesión.
-2. El sistema consolida las métricas obtenidas.
-3. El sistema actualiza el perfil cognitivo.
-4. El sistema registra los eventos finales.
-5. La sesión se marca como finalizada.
-
-## Postcondiciones
-
-* La sesión queda almacenada en el historial.
-
----
-
-# CU-04. Consultar progreso histórico
-
-## Actor principal
-
-Usuario Final
-
-## Descripción
-
-Permite visualizar la evolución del rendimiento del usuario.
-
-## Precondiciones
-
-* El usuario debe poseer sesiones registradas.
-
-## Flujo principal
-
-1. El usuario solicita consultar su historial.
-2. El sistema recupera las sesiones previas.
-3. El sistema muestra las métricas disponibles.
-
-## Postcondiciones
-
-* El usuario puede analizar su evolución.
-
----
-
-# CU-05. Administrar usuarios
-
-## Actor principal
-
-Administrador del Sistema
-
-## Descripción
-
-Permite gestionar usuarios registrados.
-
-## Flujo principal
-
-1. El administrador consulta usuarios.
-2. El administrador crea, modifica o desactiva usuarios.
-3. El sistema almacena los cambios realizados.
-
-## Postcondiciones
-
-* La información de los usuarios queda actualizada.
-
----
-
-# CU-06. Configurar parámetros globales
-
-## Actor principal
-
-Administrador del Sistema
-
-## Descripción
-
-Permite modificar parámetros generales del sistema.
-
-## Flujo principal
-
-1. El administrador accede a la configuración.
-2. El administrador modifica los parámetros.
-3. El sistema guarda los cambios.
-
-## Postcondiciones
-
-* Los nuevos parámetros quedan disponibles para futuras sesiones.
+Se rechaza la operación
+Se notifica error de estado de cuenta
+
+E2. Falla del generador de ejercicios
+
+Se crea sesión sin ejercicio inicial
+Se registra evento de error técnico
+Reglas de negocio
+Una sola sesión activa por usuario
+Toda sesión debe iniciar con al menos un ejercicio
+Puertos involucrados
+StartTrainingSession (entrada)
+UserRepository (salida)
+CognitiveProfileRepository (salida)
+ExerciseGenerationPort (salida)
+EventRepository (salida)
+# CU-02 Resolver ejercicio
+
+Objetivo
+
+Registrar, evaluar y adaptar dinámicamente la dificultad en función de la respuesta del usuario.
+
+Actores
+
+Usuario final
+
+Disparador
+
+El usuario envía una respuesta a un ejercicio activo.
+
+Precondiciones
+Sesión activa
+Ejercicio pendiente de resolución
+Postcondiciones
+Respuesta registrada
+Métricas actualizadas
+Dificultad adaptada
+Nuevo ejercicio generado o sesión en espera
+Eventos de evaluación y adaptación registrados
+Flujo principal
+El sistema recibe la respuesta del usuario.
+Se valida que el ejercicio pertenezca a la sesión activa.
+Se registra tiempo de respuesta.
+El motor de evaluación procesa la respuesta.
+Se generan métricas de rendimiento.
+El motor de adaptación ajusta la dificultad.
+Se genera un nuevo ejercicio con la nueva configuración.
+Se registra el evento evaluacion_respuesta y ajuste_dificultad.
+Flujos alternativos
+
+A1. Respuesta fuera de tiempo límite
+
+Se marca como incorrecta o incompleta según política del sistema.
+
+A2. Ejercicio ya respondido
+
+Se rechaza la operación
+Excepciones
+
+E1. Fallo en evaluación
+
+Se registra respuesta sin evaluación
+Se marca métrica como pendiente
+
+E2. Error en motor de adaptación
+
+Se mantiene dificultad previa
+Reglas de negocio
+Toda respuesta genera métricas
+La adaptación es obligatoria salvo error técnico
+No se permite doble respuesta por ejercicio
+Puertos involucrados
+SubmitAnswer (entrada)
+ResponseEvaluationPort (salida)
+AdaptationEnginePort (salida)
+MetricsRepository (salida)
+EventRepository (salida)
+
+# CU-03 Finalizar sesión
+
+
+Objetivo
+
+Cerrar una sesión de entrenamiento consolidando métricas y actualizando el perfil cognitivo.
+
+Actores
+
+Usuario final
+
+Precondiciones
+Sesión activa existente
+Postcondiciones
+Sesión finalizada
+Perfil cognitivo actualizado
+Métricas consolidadas
+Evento fin_sesion registrado
+Flujo principal
+El usuario solicita finalizar sesión.
+El sistema valida sesión activa.
+Se consolidan métricas acumuladas.
+Se actualiza el perfil cognitivo.
+Se cambia estado de sesión a “finalizada”.
+Se registran eventos finales.
+Flujos alternativos
+
+A1. Sesión sin actividad
+
+Se finaliza sin actualización significativa del perfil.
+Excepciones
+
+E1. Error en persistencia de métricas
+
+La sesión se marca como “finalización parcial”
+Reglas de negocio
+Toda sesión finalizada debe generar actualización de perfil
+No se puede reabrir una sesión finalizada
+Puertos involucrados
+EndTrainingSession (entrada)
+MetricsRepository (salida)
+CognitiveProfileRepository (salida)
+SessionRepository (salida)
+EventRepository (salida)
+# CU-04 Consultar progreso histórico
+I
+Objetivo
+
+Visualizar evolución cognitiva del usuario a lo largo del tiempo.
+
+Actores
+
+Usuario final
+
+Flujo principal
+El usuario solicita historial.
+El sistema recupera sesiones.
+El sistema agrega métricas por dimensión cognitiva.
+Se calcula evolución temporal.
+Se devuelve resumen analítico.
+Excepciones
+
+E1. Sin datos suficientes
+
+Se devuelve estado inicial sin evolución.
+Reglas de negocio
+Solo sesiones finalizadas cuentan para evolución
+Puertos
+GetUserProgress (entrada)
+MetricsRepository (salida)
+SessionRepository (salida)
+# CU-05 Administrar usuarios
+Objetivo
+
+Gestionar ciclo de vida de usuarios del sistema.
+
+Flujo principal
+Administrador consulta usuarios.
+Crea/modifica/desactiva usuario.
+Se persisten cambios.
+Reglas
+No se eliminan usuarios, solo desactivación lógica
+Puertos
+ManageUsers (entrada)
+UserRepository (salida)
+
+# CU-06 Configurar parámetros globales
+Objetivo
+
+Modificar parámetros del sistema de adaptación y generación.
+
+Flujo principal
+Administrador accede configuración.
+Modifica parámetros globales.
+Se validan restricciones.
+Se persiste configuración.
+Reglas
+Cambios afectan solo nuevas sesiones
+Puertos
+ConfigureSystem (entrada)
