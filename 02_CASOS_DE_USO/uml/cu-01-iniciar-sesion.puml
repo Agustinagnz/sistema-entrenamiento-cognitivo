@@ -9,8 +9,8 @@ rectangle "Sistema de Entrenamiento Cognitivo Adaptativo" {
   usecase "Recuperar perfil cognitivo" as UC1
   usecase "Generar ejercicio inicial" as UC2
 
-  CU1 --> UC1 
-  CU1 --> UC2 
+  CU1 --> UC1 : <<include>>
+  CU1 --> UC2 : <<include>>
 }
 
 Usuario --> CU1

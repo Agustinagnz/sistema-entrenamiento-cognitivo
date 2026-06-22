@@ -10,10 +10,10 @@ rectangle "Sistema de Entrenamiento Cognitivo Adaptativo" {
   usecase "Modificar usuario" as UC2
   usecase "Desactivar usuario" as UC3
 
-  CU5 --> UC1 
-  CU5 --> UC2 
-  CU5 --> UC3 
-
+  CU5 --> UC1 : <<include>>
+  CU5 --> UC2 : <<include>>
+  CU5 --> UC3 : <<include>>
+}
 Admin --> CU5
 
 @enduml

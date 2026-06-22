@@ -8,7 +8,7 @@ rectangle "Sistema de Entrenamiento Cognitivo Adaptativo" {
   usecase "Configurar sistema" as CU6
   usecase "Modificar parámetros globales" as UC1
 
-  CU6 --> UC1 
+  CU6 --> UC1 : <<include>>
 }
 
 Admin --> CU6
